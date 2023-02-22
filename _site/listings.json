@@ -1,0 +1,33 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/serie-dicas-dataviz/serie-dicas-dataviz.html",
+      "/posts/post-with-code/index.html",
+      "/posts/welcome/index.html",
+      "/posts/manipulando-simbolos-legenda-ggplot2/index.html"
+    ]
+  },
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/serie-dicas-dataviz/serie-dicas-dataviz.html",
+      "/posts/post-with-code/index.html",
+      "/posts/welcome/index.html",
+      "/posts/manipulando-simbolos-legenda-ggplot2/index.html"
+    ]
+  },
+  {
+    "listing": "/posts/serie-dicas-dataviz/serie-dicas-dataviz.html",
+    "items": []
+  },
+  {
+    "listing": "/archive.html",
+    "items": [
+      "/posts/serie-dicas-dataviz/serie-dicas-dataviz.html",
+      "/posts/post-with-code/index.html",
+      "/posts/welcome/index.html",
+      "/posts/manipulando-simbolos-legenda-ggplot2/index.html"
+    ]
+  }
+]

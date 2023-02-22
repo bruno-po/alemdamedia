@@ -1,0 +1,86 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "alemdamedia",
+    "section": "",
+    "text": "Série: Dicas sobre DataViz\n\n\n\n\n\n\n\n\n\n\n\n\nBruno Pinheiro de Oliveira\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 21, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nManipulando os símbolos na legenda do ggplot2\n\n\n\n\n\n\n\nggplot2\n\n\ndataviz\n\n\n\n\nSolução para vários layers diferentes\n\n\n\n\n\n\nMay 22, 2021\n\n\nBruno Pinheiro de Oliveira\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "posts/manipulando-simbolos-legenda-ggplot2/index.html",
+    "href": "posts/manipulando-simbolos-legenda-ggplot2/index.html",
+    "title": "Manipulando os símbolos na legenda do ggplot2",
+    "section": "",
+    "text": "O pacote ggplot2 é provavelmente o mais utilizado para visualização de dados no R. É um pacote muito robusto e com inúmeras possibilidades tanto gráficas como estéticas. Por meio de suas funções é possível plotar dados de forma muito simples. Algumas vezes, no entando, as definições padrões do ggplot não atendem necessidades específicas e então, no meio de tantas opções, as coisas podem ficar um tanto confusas.\nMuitas vezes, por exemplo, é necessário manipular os símbolos das legendas dos gráficos para garantir maior qualidade e objetividade visual. Não é algo complicado, mas já gastei um bom tempo pesquisando a respeito até conseguir descobrir uma forma eficiente de fazê-lo (o que só ocorreu realmente porque, para me ajudar, decidi ajudar um camarada no StackOverFlow).\nAqui neste tutorial vou explicar como realizar esta tarefa."
+  },
+  {
+    "objectID": "posts/manipulando-simbolos-legenda-ggplot2/index.html#criar-os-dados",
+    "href": "posts/manipulando-simbolos-legenda-ggplot2/index.html#criar-os-dados",
+    "title": "Manipulando os símbolos na legenda do ggplot2",
+    "section": "Criar os dados",
+    "text": "Criar os dados\nComecemos criando um conjunto de dados que possa expressar o problema.\n\ndf <-\n  data.frame(ano = rep(2000:2018, each=2),\n             dolar = sort(rnorm(1:38, 3, .6)),\n             tipo = c(\"comercial\", \"turístico\"))\n\nstr(df)\n\n'data.frame':   38 obs. of  3 variables:\n $ ano  : int  2000 2000 2001 2001 2002 2002 2003 2003 2004 2004 ...\n $ dolar: num  1.63 2.08 2.3 2.49 2.64 ...\n $ tipo : chr  \"comercial\" \"turístico\" \"comercial\" \"turístico\" ..."
+  },
+  {
+    "objectID": "posts/manipulando-simbolos-legenda-ggplot2/index.html#manipular-símbolos-da-legenda",
+    "href": "posts/manipulando-simbolos-legenda-ggplot2/index.html#manipular-símbolos-da-legenda",
+    "title": "Manipulando os símbolos na legenda do ggplot2",
+    "section": "Manipular símbolos da legenda",
+    "text": "Manipular símbolos da legenda\nPara conseguir a manipulação que desejamos, é preciso adicionar algumas especificações utilizando a função guides(), conforme indicado abaixo. Dentro dele indicamos o argumento color, e sobrescrevemos o mapeamento estético dos símbolos dentro de guide_legend(), passando os valores que definem o tipo de ponto pch e de linha linetype dentro de uma lista.\n\np1 +\n  guides(color = guide_legend(\n    override.aes = list(pch=c(NA, NA, 16), linetype=c(1,1,0))\n))\n\n\n\n\nPronto, agora sim! O resultado é o gráfico que queríamos, com os símbolos da legenda corretamente formatados."
+  },
+  {
+    "objectID": "posts/manipulando-simbolos-legenda-ggplot2/index.html#criar-o-gráfico",
+    "href": "posts/manipulando-simbolos-legenda-ggplot2/index.html#criar-o-gráfico",
+    "title": "Manipulando os símbolos na legenda do ggplot2",
+    "section": "Criar o gráfico",
+    "text": "Criar o gráfico\nAgora vamos plotar um gráfico com a série temporal em linha e um ponto correspondente a um valor do ano de 2006.\n\nlibrary(ggplot2)\np1 <- ggplot(df) +\n  geom_line(aes(x = ano, y = dolar, colour = tipo)) +\n  geom_point(aes(x = 2006, y = 3.6, colour = \"Valor máximo\"))\n\np1\n\n\n\n\nPlot com a legenda incorreta\n\n\n\n\nJá temos um gráfico bastante interessante, porém as legendas não estão adequadamente formatadas, de modo que tanto as linhas estão cortadas por um círculo como o ponto está cortado por uma linha. Queremos adequar os símbolos para que as linhas sejam representadas por linhas e o ponto apenas por um ponto."
+  },
+  {
+    "objectID": "posts/manipulando-simbolos-legenda-ggplot2/index.html#ajustar-a-legenda",
+    "href": "posts/manipulando-simbolos-legenda-ggplot2/index.html#ajustar-a-legenda",
+    "title": "Manipulando os símbolos na legenda do ggplot2",
+    "section": "Ajustar a legenda",
+    "text": "Ajustar a legenda\nPara conseguir a manipulação que desejamos, é preciso adicionar algumas especificações utilizando a função guides(), conforme indicado abaixo. Dentro dele indicamos o argumento color, e sobrescrevemos o mapeamento estético dos símbolos dentro de guide_legend(), passando os valores que definem o tipo de ponto pch e de linha linetype dentro de uma lista.\n\np1 +\n  guides(color = guide_legend(\n    override.aes = list(pch=c(NA, NA, 16), linetype=c(1,1,0))\n))\n\n\n\n\nPronto, agora sim! O resultado é o gráfico que queríamos, com os símbolos da legenda corretamente formatados."
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Além da Média",
+    "section": "",
+    "text": "Series\n\nserie-dicas-dataviz\nThis series contains a great deal of tips, tricks and packages that you can use to level up your ggplot game.\n\n\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nSérie: Dicas sobre DataViz\n\n\n\n\n\n\n\n\n\n\n\n\n0 min\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 21, 2023\n\n\n0 min\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\n0 min\n\n\n\n\n\n\n\n\nManipulando os símbolos na legenda do ggplot2\n\n\n\n\n\n\n\nggplot2\n\n\ndataviz\n\n\n\n\nSolução para vários layers diferentes\n\n\n\n\n\n\nMay 22, 2021\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/serie-dicas-dataviz/serie-dicas-dataviz.html",
+    "href": "posts/serie-dicas-dataviz/serie-dicas-dataviz.html",
+    "title": "Série: Dicas sobre DataViz",
+    "section": "",
+    "text": "No matching items"
+  },
+  {
+    "objectID": "archive.html",
+    "href": "archive.html",
+    "title": "Archive",
+    "section": "",
+    "text": "Série: Dicas sobre DataViz\n\n\n\n\n\n\n\n \n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\n\n\n\nFeb 21, 2023\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\n\n\n\n\n\n\nManipulando os símbolos na legenda do ggplot2\n\n\n\n\n\n\n\n\n\nMay 22, 2021\n\n\n\n\n\n\nNo matching items"
+  }
+]
